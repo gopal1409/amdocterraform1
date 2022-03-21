@@ -13,13 +13,20 @@ terraform {
 
 #configure the microsoft azure provider
 provider "azurerm" {
-features {}
+features {} #as per the default setting if i delete vm the storage will also delete
+}
+
+provider "azurerm" {
+    features {
+        virtual_machine {
+          delete_os_disk_on_deletion = false #this will ensure that when the vm get destroyed disk is not delete
+        }
+    }
+    alias = "provider2-westus"
+    #clientid
+    #environment
+    #subscription
 }
 
 
-#create resource group
 
-resource "azurerm_resource_group" "my_demo_rg1" {
-  location = "eastus"
-  name     = "my-demo-rg1"
-}
